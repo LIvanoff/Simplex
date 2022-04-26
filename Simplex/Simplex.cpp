@@ -8,6 +8,8 @@ class Simplex {
 private:
 	vector<int> Cj = { 3,5 }; // коэф зависимых переменных
 	vector<int> Cb = { 0,0,0,0 }; // коэф базисных пременных
+	float delta1 = 0;
+	float delta2 = 0;
 	float simp_arr[5][3];
 public:
 	Simplex(float (&arr)[5][3]) 
@@ -52,7 +54,13 @@ public:
 	{
 		while(!IsItEnd())
 		{
+			for (int i = 0; i < 5; i++)
+			{
+				for (int j = 0; j < 3; j++)
+				{
 
+				}
+			}
 		}
 	}
 
