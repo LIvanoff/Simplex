@@ -81,7 +81,10 @@ public:
 	int findRow(int col)
 	{
 		int row;
-		for(int i = 0; i < 4)
+		for(int i = 0; i < 4; )
+		{
+
+		}
 		return row;
 	}
 };
