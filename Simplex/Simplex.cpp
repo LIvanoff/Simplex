@@ -135,11 +135,6 @@ public:
 		{
 			for (int j = 0; j < 1; j++)
 			{
-				
-				float x1 = simp_arr[i][j];
-				x1 = abs(x1);
-				float x2 = simp_arr[i][j+1];
-				x2 = abs(x2);
 				if (simp_arr[i][j] > simp_arr[i][j + 1])
 				{
 					col = 1;
