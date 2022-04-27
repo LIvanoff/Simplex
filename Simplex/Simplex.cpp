@@ -54,13 +54,14 @@ public:
 			}
 			cout << "\n";
 		}
+		cout << "\n";
 	}
 
 	bool IsItEnd()
 	{
 		bool flag = true;
 
-		for (int j = 0; j < 3; j++)
+		for (int j = 0; j < 2; j++)
 		{
 			if (this->simp_arr[4][j] < 0)
 			{
@@ -70,6 +71,10 @@ public:
 		}
 
 		return flag;
+	}
+	void printQ()
+	{
+		cout << "\n Q = " << simp_arr[4][2];
 	}
 
 	void copyArray(float (&copy_arr)[5][3])
@@ -89,17 +94,18 @@ public:
 			int col = findCol();
 			int row = findRow(col);
 			float ars = simp_arr[row][col];
+			cout << "ars = " << ars << "\n";
 			float copy_arr[5][3];
 			copyArray(copy_arr);
 			for (int i = 0; i < 5; i++)
 			{
 				for (int j = 0; j < 3; j++)
 				{
-					if(j == col || j == row )
+					if(j == col || i == row )
 					{
-						if(i == col && j == row)
+						if(i == row && j == col)
 						{
-							simp_arr[i][j] = 1 /simp_arr[i][j];
+							simp_arr[i][j] = 1 /ars;
 						}
 						else if( i == row )
 						{
@@ -107,15 +113,17 @@ public:
 						}
 						else
 						{
-							simp_arr[i][j] = 1 / -simp_arr[i][j];
+							simp_arr[i][j] = simp_arr[i][j] / -ars;
 						}
 					}
 					else
 					{
-						simp_arr[i][j] = ((copy_arr[i][j] * ars)-( * )) / ars;
+						simp_arr[i][j] = copy_arr[i][j] - (copy_arr[i][col] * copy_arr[row][j])/ ars;
+						//simp_arr[i][j] =((copy_arr[i][j] * ars)-(copy_arr[i][col] * copy_arr[row][j])) / ars;
 					}
 				}
 			}
+			printSimplex();
 		}
 
 	}
@@ -132,8 +140,7 @@ public:
 				x1 = abs(x1);
 				float x2 = simp_arr[i][j+1];
 				x2 = abs(x2);
-				cout << x1<< " "<<x2;
-				if (x1 < x2 || x1 == x2)
+				if (simp_arr[i][j] > simp_arr[i][j + 1])
 				{
 					col = 1;
 					break;
@@ -145,6 +152,7 @@ public:
 
 	int findRow(int col)
 	{
+		/*
 		int row = 0;
 		int temp = 0;
 		for(int i = 0; i < 4; i++ )
@@ -158,6 +166,20 @@ public:
 				}
 			}
 		}
+		return row;*/
+		int row = 0;
+
+		for (int i = 0; i < 4; i++)
+			if (simp_arr[i][col] > 0)
+			{
+				row = i;
+				break;
+			}
+
+		for (int i = row + 1; i < 4; i++)
+			if ((simp_arr[i][col] > 0) && ((simp_arr[i][2] / simp_arr[i][col]) < (simp_arr[row][2] / simp_arr[row][col])))
+				row = i;
+
 		return row;
 	}
 };
@@ -169,4 +191,5 @@ int main()
 	sp.printSimplex();
 	sp.Calculate();
 	sp.printSimplex();
+	sp.printQ();
 }
