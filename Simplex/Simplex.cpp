@@ -1,6 +1,7 @@
 ﻿#include "pch.h"
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
@@ -10,6 +11,7 @@ private:
 	vector<int> Cb = { 0,0,0,0 }; // коэф базисных пременных
 	float delta1 = 0;
 	float delta2 = 0;
+	float Q = 0;
 	float simp_arr[5][3];
 public:
 	Simplex(float (&arr)[5][3]) 
@@ -21,6 +23,15 @@ public:
 				this->simp_arr[i][j] = arr[i][j];
 			}
 		}
+
+		// расчёт delta1, delta2 и Q
+		for(int i = 0; i < Cb.size(); i++)
+		{
+
+		}
+		this->simp_arr[4][0] = delta1 - 3;
+		this->simp_arr[4][1] = delta2 - 5;
+		this->simp_arr[4][2] = Q;
 	};
 	void printSimplex()
 	{
@@ -62,17 +73,27 @@ public:
 				}
 			}
 		}
+
 	}
 
 	int findCol()
 	{
 		int col = 0;
-		for (int j = 0; j < 2; j++)
+		for(int i = 4; i < 5 ; i++)
 		{
-			if (this->simp_arr[4, j] > this->simp_arr[4,j+1])
+			for (int j = 0; j < 1; j++)
 			{
-				col = 1;
-				break;
+				
+				float x1 = simp_arr[i][j];
+				x1 = abs(x1);
+				float x2 = simp_arr[i][j+1];
+				x2 = abs(x2);
+				cout << x1<< " "<<x2;
+				if (x1 < x2 || x1 == x2)
+				{
+					col = 1;
+					break;
+				}
 			}
 		}
 		return col;
@@ -80,10 +101,18 @@ public:
 
 	int findRow(int col)
 	{
-		int row;
-		for(int i = 0; i < 4; )
+		int row = 0;
+		int temp = 0;
+		for(int i = 0; i < 4; i++ )
 		{
-
+			for (int j = col; j < col+1; j++ )
+			{
+				if(simp_arr[i][j]>0 && temp > (simp_arr[i][2]/ simp_arr[i][j]) > 0 )
+				{
+					temp = simp_arr[i][2] / simp_arr[i][j];
+					row = i;
+				}
+			}
 		}
 		return row;
 	}
